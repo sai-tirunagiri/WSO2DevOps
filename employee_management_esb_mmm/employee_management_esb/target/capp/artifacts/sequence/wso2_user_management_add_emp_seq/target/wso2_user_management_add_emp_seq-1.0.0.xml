@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="wso2_user_management_add_emp_seq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <log level="custom">
+    <property name="action" value="add_employee"/>
+    <property name="seq" value="wso2_user_management_add_emp_seq"/>
+    <property expression="$ctx:EMPID" name="empID" xmlns:ns="http://org.apache.synapse/xsd"/>
+  </log>
+  <payloadFactory media-type="xml">
+    <format>
+      <p:_postadd_employee xmlns:p="http://ws.wso2.org/dataservice">
+        <xs:EMPID xmlns:xs="http://ws.wso2.org/dataservice">$1</xs:EMPID>
+        <xs:NAME xmlns:xs="http://ws.wso2.org/dataservice">$2</xs:NAME>
+        <xs:AGE xmlns:xs="http://ws.wso2.org/dataservice">$3</xs:AGE>
+        <xs:GENDER xmlns:xs="http://ws.wso2.org/dataservice">$4</xs:GENDER>
+      </p:_postadd_employee>
+    </format>
+    <args>
+      <arg evaluator="xml" expression="$ctx:EMPID" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="$ctx:EMP_NAME" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="$ctx:EMP_AGE" xmlns:ns="http://org.apache.synapse/xsd"/>
+      <arg evaluator="xml" expression="$ctx:EMP_GENDER" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </args>
+  </payloadFactory>
+  <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
+  <property name="contentType" scope="axis2" type="STRING" value="application/xml"/>
+  <property name="HTTP_METHOD" scope="axis2" type="STRING" value="POST"/>
+  <call>
+    <endpoint key="wso2_user_management_ep"/>
+  </call>
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  <property name="contentType" scope="axis2" type="STRING" value="application/json"/>
+  <property expression="json-eval($.REQUEST_STATUS)"
+    name="REQUEST_STATUS" scope="default" type="STRING"/>
+  <filter regex="SUCCESSFUL" source="$ctx:REQUEST_STATUS" xmlns:ns="http://org.apache.synapse/xsd">
+    <then>
+      <payloadFactory media-type="json">
+        <format>{"success":true,"message":"successfully created employee"}</format>
+        <args/>
+      </payloadFactory>
+    </then>
+    <else>
+      <payloadFactory media-type="json">
+        <format>{"success":false,"message":"failed to create employee"}</format>
+        <args/>
+      </payloadFactory>
+    </else>
+  </filter>
+  <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+  <property name="contentType" scope="axis2" type="STRING" value="application/json"/>
+  <respond/>
+</sequence>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/employee" name="employee_management_service" xmlns="http://ws.apache.org/ns/synapse">
+  <resource methods="POST" protocol="http" uri-template="/add">
+    <inSequence>
+      <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+      <property name="contentType" scope="axis2" type="STRING" value="application/json"/>
+      <property expression="json-eval($.EMPID)" name="EMPID"
+        scope="default" type="STRING"/>
+      <property expression="json-eval($.EMP_NAME)" name="EMP_NAME"
+        scope="default" type="STRING"/>
+      <property expression="json-eval($.EMP_AGE)" name="EMP_AGE"
+        scope="default" type="STRING"/>
+      <property expression="json-eval($.EMP_GENDER)" name="EMP_GENDER"
+        scope="default" type="STRING"/>
+      <sequence key="wso2_user_management_add_emp_seq"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
+  <resource methods="POST GET" protocol="http" uri-template="/fetch">
+    <inSequence>
+      <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+      <property name="contentType" scope="axis2" type="STRING" value="application/json"/>
+      <property expression="json-eval($.EMPID)" name="EMPID"
+        scope="default" type="STRING"/>
+      <sequence key="wso2_user_management_fetch_emp_seq"/>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </resource>
+</api>

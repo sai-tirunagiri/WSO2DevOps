@@ -1,0 +1,39 @@
+<data enableBatchRequests="true" enableBoxcarring="true" name="user_management_wso2" transports="http https local">
+   <config id="h2_db">
+      <property name="carbon_datasource_name">WSO2_CARBON_DB</property>
+   </config>
+   <query id="add_employee" useConfig="h2_db">
+      <sql>INSERT INTO EMPLOYEES(EMPID, NAME, AGE, GENDER) VALUES (:EMPID, :NAME, :AGE, :GENDER)</sql>
+      <param name="EMPID" sqlType="STRING"/>
+      <param name="NAME" sqlType="STRING"/>
+      <param name="AGE" sqlType="STRING"/>
+      <param name="GENDER" sqlType="STRING"/>
+   </query>
+   <query id="employee" useConfig="h2_db">
+      <sql>Select NAME,AGE,GENDER from employees where EMPID=:EMPID</sql>
+      <result element="result" rowName="">
+         <element column="NAME" name="NAME" xsdType="string"/>
+         <element column="AGE" name="AGE" xsdType="string"/>
+         <element column="GENDER" name="GENDER" xsdType="string"/>
+      </result>
+      <param name="EMPID" sqlType="STRING"/>
+   </query>
+   <resource method="POST" path="add_employee" returnRequestStatus="true">
+      <call-query href="add_employee">
+         <with-param name="EMPID" query-param="EMPID"/>
+         <with-param name="NAME" query-param="NAME"/>
+         <with-param name="AGE" query-param="AGE"/>
+         <with-param name="GENDER" query-param="GENDER"/>
+      </call-query>
+   </resource>
+   <resource method="GET" path="employee">
+      <call-query href="employee">
+         <with-param name="EMPID" query-param="EMPID"/>
+      </call-query>
+   </resource>
+   <resource method="POST" path="find">
+      <call-query href="employee">
+         <with-param name="EMPID" query-param="EMPID"/>
+      </call-query>
+   </resource>
+</data>

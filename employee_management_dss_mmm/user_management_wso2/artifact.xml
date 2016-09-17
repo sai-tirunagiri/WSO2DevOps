@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="user_management_wso2" groupId="com.quinnox.com.user_management_wso2.dataservice" version="1.0.0" type="service/dataservice" serverRole="DataServicesServer">
+        <file>dataservice/user_management_wso2.dbs</file>
+    </artifact>
+</artifacts>

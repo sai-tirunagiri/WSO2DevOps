@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="wso2_user_management_fetch_emp_seq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+  <log level="custom">
+    <property name="action" value="fecth_employee"/>
+    <property name="seq" value="wso2_user_management_fetch_emp_seq"/>
+    <property expression="$ctx:EMPID" name="empID" xmlns:ns="http://org.apache.synapse/xsd"/>
+  </log>
+  <payloadFactory media-type="xml">
+    <format>
+      <p:_postfind xmlns:p="http://ws.wso2.org/dataservice">
+        <xs:EMPID xmlns:xs="http://ws.wso2.org/dataservice">$1</xs:EMPID>
+      </p:_postfind>
+    </format>
+    <args>
+      <arg evaluator="xml" expression="$ctx:EMPID" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </args>
+  </payloadFactory>
+  <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
+  <property name="contentType" scope="axis2" type="STRING" value="application/xml"/>
+  <property name="HTTP_METHOD" scope="axis2" type="STRING" value="POST"/>
+  <send>
+    <endpoint key="wso2_user_management_ep"/>
+  </send>
+</sequence>

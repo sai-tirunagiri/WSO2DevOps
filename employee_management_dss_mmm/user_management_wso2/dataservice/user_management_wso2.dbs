@@ -1,6 +1,6 @@
 <data enableBatchRequests="true" enableBoxcarring="true" name="user_management_wso2" transports="http https local">
    <config id="h2_db">
-      <property name="carbon_datasource_name">WSO2_CARBON_DB</property>
+      <property name="carbon_datasource_name">h2_db</property>
    </config>
    <query id="add_employee" useConfig="h2_db">
       <sql>INSERT INTO EMPLOYEES(EMPID, NAME, AGE, GENDER) VALUES (:EMPID, :NAME, :AGE, :GENDER)</sql>

@@ -11,7 +11,7 @@
    </query>
    <query id="employee" useConfig="h2_db">
       <sql>Select NAME,AGE,GENDER from employees where EMPID=:EMPID</sql>
-      <result element="result" rowName="">
+      <result element="result" rowName="details">
          <element column="NAME" name="NAME" xsdType="string"/>
          <element column="AGE" name="AGE" xsdType="string"/>
          <element column="GENDER" name="GENDER" xsdType="string"/>

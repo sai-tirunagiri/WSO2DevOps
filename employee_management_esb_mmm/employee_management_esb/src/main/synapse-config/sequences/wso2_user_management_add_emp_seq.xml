@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="wso2_user_management_add_emp_seq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-  <log level="custom">
+  <log level="full">
     <property name="action" value="add_employee"/>
     <property name="seq" value="wso2_user_management_add_emp_seq"/>
     <property expression="$ctx:EMPID" name="empID" xmlns:ns="http://org.apache.synapse/xsd"/>
